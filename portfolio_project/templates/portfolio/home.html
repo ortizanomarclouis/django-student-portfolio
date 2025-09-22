@@ -1,0 +1,84 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        {% if profile %}
+            <h1>Hello, I'm {{ profile.name }}</h1>
+            <h2>{{ profile.title }}</h2>
+            <p>{{ profile.bio|truncatewords:30 }}</p>
+            <div class="hero-buttons">
+                <a href="{% url 'projects' %}" class="btn btn-primary">View My Work</a>
+                <a href="{% url 'contact' %}" class="btn btn-outline">Get In Touch</a>
+            </div>
+        {% else %}
+            <h1>Welcome to My Portfolio</h1>
+            <p>Please add your profile information through the admin panel.</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+{% if featured_projects %}
+<section class="featured-projects">
+    <div class="container">
+        <h2>Featured Projects</h2>
+        <div class="projects-grid">
+            {% for project in featured_projects %}
+            <div class="project-card">
+                {% if project.project_image %}
+                    <img src="{{ project.project_image.url }}" alt="{{ project.title }}">
+                {% endif %}
+                <div class="project-info">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:20 }}</p>
+                    <div class="project-tech">
+                        <span>{{ project.technologies_used }}</span>
+                    </div>
+                    <div class="project-links">
+                        {% if project.github_link %}
+                            <a href="{{ project.github_link }}" target="_blank" class="btn btn-sm">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        {% endif %}
+                        {% if project.live_demo_link %}
+                            <a href="{{ project.live_demo_link }}" target="_blank" class="btn btn-sm btn-primary">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center">
+            <a href="{% url 'projects' %}" class="btn btn-outline">View All Projects</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Skills Preview -->
+{% if skills %}
+<section class="skills-preview">
+    <div class="container">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            {% for skill in skills %}
+            <div class="skill-item">
+                <div class="skill-info">
+                    <span class="skill-name">{{ skill.name }}</span>
+                    <span class="skill-percentage">{{ skill.percentage }}%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-bar" data-percentage="{{ skill.percentage }}"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

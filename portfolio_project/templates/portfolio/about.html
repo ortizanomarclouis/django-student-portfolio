@@ -1,0 +1,64 @@
+<!-- templates/portfolio/about.html -->
+{% extends 'portfolio/base.html' %}
+
+{% block title %}About - {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="about-hero">
+    <div class="container">
+        <h1>About Me</h1>
+    </div>
+</section>
+
+{% if profile %}
+<section class="about-content">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text">
+                <h2>{{ profile.title }}</h2>
+                <p>{{ profile.bio|linebreaks }}</p>
+                <div class="contact-info">
+                    <p><strong>Email:</strong> {{ profile.email }}</p>
+                    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+                </div>
+            </div>
+            {% if profile.profile_image %}
+            <div class="about-image">
+                <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Education Section -->
+{% if education %}
+<section class="education">
+    <div class="container">
+        <h2>Education</h2>
+        <div class="timeline">
+            {% for edu in education %}
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>{{ edu.degree }}</h3>
+                    <h4>{{ edu.institution }}</h4>
+                    <p class="timeline-date">
+                        {{ edu.start_date|date:"Y" }} - 
+                        {% if edu.current %}Present{% else %}{{ edu.end_date|date:"Y" }}{% endif %}
+                    </p>
+                    {% if edu.description %}
+                        <p>{{ edu.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Skills Section -->
+{% if skills %}
+<section class="skills-detailed">
+    <div class="container">
