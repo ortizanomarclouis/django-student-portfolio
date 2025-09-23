@@ -27,3 +27,5 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter = ['created_at']
     readonly_fields = ['created_at']
     search_fields = ['name', 'email', 'subject']
+
+admin.site.site_header = "Student Portfolio App"
